@@ -33,16 +33,21 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(100)
-                    ->label('Заголовок')
-                    ->live(true)
-                    ->afterStateUpdated(function (Set $set, $state) {
-                        $set('slug', Str::slug($state));
-                    }),
-                Forms\Components\TextInput::make('slug')
-                    ->label('Символьный код'),
+                Forms\Components\Section::make('Основное')
+                    ->description('Основные данные')
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(100)
+                            ->label('Заголовок')
+                            ->live(true)
+                            ->afterStateUpdated(function (Set $set, $state) {
+                                $set('slug', Str::slug($state));
+                            }),
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Символьный код'),
+                    ])
+                        ->columns(2),
                 Forms\Components\TextInput::make('text')
                     ->maxLength(255)
                     ->label('Текст'),
