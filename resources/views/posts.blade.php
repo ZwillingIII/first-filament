@@ -8,7 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    Hello
     @foreach($posts as $post)
         <pre>{{ $post->title }}</pre>
     @endforeach

@@ -6,4 +6,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/posts', 'posts');
+//Route::view('/posts', 'posts');

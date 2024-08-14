@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Post;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -22,11 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // TODO: лучше так не делать
-        $posts = Post::all();
-
-        View::composer('*', function ($view) use ($posts) {
-            $view->with('posts', $posts);
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
         });
     }
 }

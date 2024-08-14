@@ -48,9 +48,22 @@ class PostResource extends Resource
                             ->label('Символьный код'),
                     ])
                         ->columns(2),
-                Forms\Components\TextInput::make('text')
+                Forms\Components\Section::make('Даты')
+                    ->schema([
+                        Forms\Components\DatePicker::make('created_at')
+                            ->label('Создан от')
+                            ->maxDate(now())
+                            ->default(now()),
+                        Forms\Components\DatePicker::make('updated_at')
+                            ->label('Обновлен')
+                            ->maxDate(now())
+                            ->default(now()),
+                    ])->columns(2),
+                Forms\Components\Textarea::make('text')
                     ->maxLength(255)
-                    ->label('Текст'),
+                    ->label('Текст')
+                    ->rows(3)
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->preload()
@@ -64,14 +77,6 @@ class PostResource extends Resource
                             ->required()
                             ->password(),
                     ]),
-                Forms\Components\DatePicker::make('created_at')
-                    ->label('Создан от')
-                    ->maxDate(now())
-                    ->default(now()),
-                Forms\Components\DatePicker::make('updated_at')
-                    ->label('Обновлен')
-                    ->maxDate(now())
-                    ->default(now()),
                 Forms\Components\Toggle::make('active')
                     ->label('Активность')
                     ->default(true)
