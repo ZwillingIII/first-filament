@@ -40,15 +40,15 @@ abstract class BaseResource extends Resource
 
     protected static bool $hasTitleCaseModelLabel = false;
 
-    public static function getPluralModelLabel(): string
-    {
-        return __('resources.' . static::getResourceCode() . '.plural_label');
-    }
+//    public static function getPluralModelLabel(): string
+//    {
+//        return __('resources.' . static::getResourceCode() . '.plural_label');
+//    }
 
-    public static function getModelLabel(): string
-    {
-        return __('resources.' . static::getResourceCode() . '.label');
-    }
+//    public static function getModelLabel(): string
+//    {
+//        return __('resources.' . static::getResourceCode() . '.label');
+//    }
 
     public static function canCreate(): bool
     {

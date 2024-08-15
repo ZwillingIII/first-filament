@@ -14,7 +14,7 @@ class PostPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view any posts');
+        return $user->hasPermissionTo('post_view');
     }
 
     /**

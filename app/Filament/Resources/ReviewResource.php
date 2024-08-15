@@ -30,10 +30,11 @@ class ReviewResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->label('Пользователь'),
-                Forms\Components\Select::make('post_id')
-                    ->relationship('post', 'title')
-                    ->label('Привязка к посту'),
+                    ->label('Пользователь')
+                    ->default(auth()->user()->id),
+//                Forms\Components\Select::make('post_id')
+//                    ->relationship('post', 'title')
+//                    ->label('Привязка к посту'),
                 Forms\Components\Textarea::make('text')
                     ->label('Текст отзыва')
                     ->columnSpanFull()

@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
-use App\Models\User;
+use App\Models\Review;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -76,10 +76,11 @@ class PostResource extends Resource
                         Forms\Components\TextInput::make('Пароль')
                             ->required()
                             ->password(),
-                    ]),
+                    ])
+                    ->default(auth()->user()->id),
                 Forms\Components\Toggle::make('active')
                     ->label('Активность')
-                    ->default(true)
+                    ->default(true),
             ]);
     }
 
@@ -121,7 +122,7 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ReviewsRelationManager::class
         ];
     }
 
@@ -136,6 +137,6 @@ class PostResource extends Resource
 
     public static function getDates()
     {
-        return Post::query()->pluck('created_at');
+        return Post::query()->pluck('created_at')->toArray();
     }
 }

@@ -48,7 +48,8 @@ class RoleResource extends BaseResource
                     ->relationship('permissions', 'name')
                     ->getOptionLabelFromRecordUsing(fn(Permission $record) => str_replace('filament.permissions.', '', trans('filament.permissions.' . $record->name)))
                     ->label(__('fields.permissions'))
-                    ->multiple(),
+                    ->multiple()
+                    ->searchDebounce(500),
             ]);
     }
 

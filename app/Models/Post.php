@@ -27,12 +27,7 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-//    public function comments()
-//    {
-//        return $this->belongsTo(Review::class);
-//    }
-
-    public function comments()
+    public function reviews()
     {
         return $this->hasMany(Review::class);
     }
