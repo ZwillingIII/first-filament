@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
-use App\Models\Review;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
@@ -16,7 +16,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class PostResource extends Resource
@@ -108,8 +107,10 @@ class PostResource extends Resource
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from'),
-                        DatePicker::make('created_until'),
+                        DatePicker::make('created_from')
+                            ->label('От'),
+                        DatePicker::make('created_until')
+                            ->label('До'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -122,7 +123,21 @@ class PostResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     })
-            ])
+                    ->indicateUsing(function (array $data) {
+                        $indicators = [];
+
+                        if ($data['created_from'] ?? null) {
+                            $indicators['created_from'] = 'От ' . Carbon::parse($data['created_from']);
+                        }
+
+                        if ($data['created_until'] ?? null) {
+                            $indicators['created_until'] = 'До ' . Carbon::parse($data['created_until']);
+                        }
+
+                        return $indicators;
+                    })
+            ],
+            layout: Tables\Enums\FiltersLayout::Modal)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

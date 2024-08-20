@@ -4,7 +4,10 @@ namespace App\Filament\Resources\PostResource\Pages;
 
 use App\Filament\Resources\PostResource;
 use Filament\Actions;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class ListPosts extends ListRecords
 {
@@ -14,6 +17,15 @@ class ListPosts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    public function getTabs() : array
+    {
+        return [
+            'Все' => Tab::make(),
+            'Эта неделя' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('created_at', '>=', now()->subWeek())),
         ];
     }
 }
