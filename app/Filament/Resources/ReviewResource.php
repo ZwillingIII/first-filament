@@ -8,6 +8,9 @@ use App\Models\Post;
 use App\Models\Review;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -32,9 +35,6 @@ class ReviewResource extends Resource
                     ->relationship('user', 'name')
                     ->label('Пользователь')
                     ->default(auth()->user()->id),
-//                Forms\Components\Select::make('post_id')
-//                    ->relationship('post', 'title')
-//                    ->label('Привязка к посту'),
                 Forms\Components\Textarea::make('text')
                     ->label('Текст отзыва')
                     ->columnSpanFull()
@@ -64,6 +64,8 @@ class ReviewResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -79,11 +81,27 @@ class ReviewResource extends Resource
         ];
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+//                TextEntry::make('text')
+//                    ->label('Отзыв')
+                Section::make('Отзыв')
+                    ->schema([
+                        TextEntry::make('text')
+                            ->columnSpanFull()
+                    ])
+                    ->columns(2)
+            ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListReviews::route('/'),
             'create' => Pages\CreateReview::route('/create'),
+            'view' => Pages\ViewReview::route('/{record}'),
             'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
