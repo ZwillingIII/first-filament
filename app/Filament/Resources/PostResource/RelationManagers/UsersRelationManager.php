@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PostResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,11 +21,16 @@ class UsersRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('id')
+                    ->required()
+                    ->label('ID'),
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Имя'),
             ]);
     }
+
 
     public function table(Table $table): Table
     {
@@ -40,8 +46,7 @@ class UsersRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
