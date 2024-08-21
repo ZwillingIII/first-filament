@@ -28,6 +28,7 @@ class PostResource extends Resource
     protected static ?string $modelLabel = 'Новость';
     protected static ?string $pluralModelLabel = 'Новости';
     protected static ?string $navigationGroup = 'Контент';
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form
     {
