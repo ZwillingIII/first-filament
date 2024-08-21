@@ -2,19 +2,16 @@
 
 namespace App\Filament\Resources\PostResource\RelationManagers;
 
-use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewsRelationManager extends RelationManager
 {
     protected static string $relationship = 'reviews';
+    protected static ?string $title = 'Отзывы';
 
     public function form(Form $form): Form
     {

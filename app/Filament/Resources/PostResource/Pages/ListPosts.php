@@ -26,6 +26,10 @@ class ListPosts extends ListRecords
             'Все' => Tab::make(),
             'Эта неделя' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('created_at', '>=', now()->subWeek())),
+            'Этот месяц' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('created_at', '>=', now()->subMonth())),
+            'Этот год' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('created_at', '>=', now()->subYear())),
         ];
     }
 }
