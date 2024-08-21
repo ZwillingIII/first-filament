@@ -11,7 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
@@ -24,6 +24,7 @@ class UserResource extends Resource
     protected static ?string $modelLabel = 'Пользователь';
     protected static ?string $pluralModelLabel = 'Пользователи';
     protected static ?string $navigationGroup = 'Пользователи';
+    protected static ?string $recordTitleAttribute = 'name'; // глобальный поиск по имени
 
     public static function form(Form $form): Form
     {
@@ -74,6 +75,30 @@ class UserResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    // Выводим в глобальном поиске почту пользователя
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->name;
+    }
+
+    // По каким атрибутам происходит поиск
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'email',
+            'name'
+        ];
+    }
+
+    // Детали, которые выводятся в поиске
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'email' => $record->email,
+            'created_at' => $record->created_at,
         ];
     }
 
